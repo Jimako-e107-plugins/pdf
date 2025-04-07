@@ -30,6 +30,11 @@ $qs = explode('.', e_QUERY,2);
 $source = $qs[0];
 $parms = varset($qs[1],'');
 
+
+$sql = e107::getDb();
+$tp = e107::getParser();
+$con = e107::getDate();
+
 //include_lan(e_PLUGIN.'pdf/languages/'.e_LANGUAGE.'_admin_pdf.php');
 
 require_once(e_PLUGIN.'pdf/e107pdf.php');	//require the e107pdf class
@@ -38,6 +43,8 @@ $pdf = new e107PDF();
 if(strpos($source,'plugin:') !== FALSE)
 {
 	$plugin = substr($source,7);
+
+	
 	if(file_exists(e_PLUGIN.$plugin.'/e_emailprint.php'))
 	{
 		include_once(e_PLUGIN.$plugin.'/e_emailprint.php');
@@ -61,9 +68,9 @@ else
 {
 	if($source == 'news')
 	{
-		$con = new convert;
-		$sql->db_Select('news', '*', 'news_id='.intval($parms));
-		$row = $sql->db_Fetch(); 
+
+		$sql->select('news', '*', 'news_id='.intval($parms));
+		$row = $sql->fetch(); 
 		$news_body = $tp->toHTML($row['news_body'], TRUE);
 		$news_extended = $tp->toHTML($row['news_extended'], TRUE);
 		if ($row['news_author'] == 0)
@@ -73,10 +80,10 @@ else
 		}
 		else
 		{
-			$sql->db_Select('news_category', 'category_id, category_name', 'category_id='.intval($row['news_category']));
-			list($category_id, $category_name) = $sql->db_Fetch();
-			$sql->db_Select('user', 'user_id, user_name', 'user_id='.intval($row['news_author']));
-			list($a_id, $a_name) = $sql->db_Fetch(MYSQL_NUM);
+			$sql->select('news_category', 'category_id, category_name', 'category_id='.intval($row['news_category']));
+			list($category_id, $category_name) = $sql->fetch();
+			$sql->select('user', 'user_id, user_name', 'user_id='.intval($row['news_author']));
+			list($a_id, $a_name) = $sql->fetch(MYSQL_NUM);
 		}
 		$row['news_datestamp'] = $con->convert_date($row['news_datestamp'], "long");
 	
