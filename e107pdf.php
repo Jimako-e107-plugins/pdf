@@ -39,7 +39,7 @@ define('K_PATH_URL', SITEURL);			// Used with forms (TODO: check validity)
 define('K_CELL_HEIGHT_RATIO', 1.25);
 
 // Following may be used (among others)
-	//define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
+	define ('K_PATH_FONTS', K_PATH_MAIN.'tcpdf/fonts/');
 	define ('K_PATH_CACHE', e_CACHE_CONTENT);
 	define ('K_PATH_URL_CACHE', K_PATH_URL.e_CACHE_CONTENT);
 	define ('K_PATH_IMAGES', K_PATH_MAIN.'images/');
@@ -51,7 +51,7 @@ It can be downloaded from: http://sourceforge.net/projects/tcpdf/
 */
 
 
-require_once(e_PLUGIN.'pdf/tcpdf.php');		//require the ufpdf class
+require_once(e_PLUGIN.'pdf/tcpdf/tcpdf.php');		//require the ufpdf class
 include_lan(e_PLUGIN.'pdf/languages/'.e_LANGUAGE.'_admin_pdf.php');
 
 
@@ -336,7 +336,7 @@ class e107PDF extends TCPDF
 	protected function _getfontpath() 
 	{
 		//return str_replace(e_HTTP, e_ROOT, e_PLUGIN_ABS.'pdf/fonts/');
-		return e_PLUGIN.'pdf/fonts/';
+		return e_PLUGIN.'pdf/tcpdf/fonts/';
 	}
 
 
